@@ -1,0 +1,84 @@
+>  use mi_primera_db
+switched to db mi_primera_db
+>  db.createCollection("estudiantes")
+{ "ok" : 1 }
+
+> db.estudiantes.insert({nombre:"Pedro",estado_hogar:"Bueno",numero_suerte:10,cumpleaños: {mes: "septiembre", dia:30, año:2021}})
+WriteResult({ "nInserted" : 1 })
+> db.estudiantes.insert({nombre:"Juan",estado_hogar:"regular",numero_suerte:66,cumpleaños: {mes: "agosto", dia:20, año:2021}})
+WriteResult({ "nInserted" : 1 })
+> db.estudiantes.insert({nombre:"Julio",estado_hogar:"malita",numero_suerte:300,cumpleaños: {mes: "agosto", dia:22, año:2021}})
+WriteResult({ "nInserted" : 1 })
+> db.estudiantes.insert({nombre:"ramiro",estado_hogar:"excelente",numero_suerte:3,cumpleaños: {mes: "Julio", dia:2, año:2021}})
+WriteResult({ "nInserted" : 1 })
+> db.estudiantes.insert({nombre:"luz",estado_hogar:"mas o menos",numero_suerte:55,cumpleaños: {mes: "marzo", dia:8, año:2022}})
+WriteResult({ "nInserted" : 1 })
+
+> db.estudiantes.find()
+{ "_id" : ObjectId("6369276c4e15819b73808d4e"), "nombre" : "Pedro", "estado_hogar" : "Bueno", "numero_suerte" : 10, "cumpleaños" : { "mes" : "septiembre", "dia" : 30, "año" : 2021 } }
+{ "_id" : ObjectId("636927754e15819b73808d4f"), "nombre" : "Juan", "estado_hogar" : "regular", "numero_suerte" : 66, "cumpleaños" : { "mes" : "agosto", "dia" : 20, "año" : 2021 } }
+{ "_id" : ObjectId("6369277c4e15819b73808d50"), "nombre" : "Julio", "estado_hogar" : "malita", "numero_suerte" : 300, "cumpleaños" : { "mes" : "agosto", "dia" : 22, "año" : 2021 } }
+{ "_id" : ObjectId("636927824e15819b73808d51"), "nombre" : "ramiro", "estado_hogar" : "excelente", "numero_suerte" : 3, "cumpleaños" : { "mes" : "Julio", "dia" : 2, "año" : 2021 } }
+{ "_id" : ObjectId("636927884e15819b73808d52"), "nombre" : "luz", "estado_hogar" : "mas o menos", "numero_suerte" : 55, "cumpleaños" : { "mes" : "marzo", "dia" : 8, "año" : 2022 } }
+
+> db.estudiantes.find({numero_suerte: 3})
+{ "_id" : ObjectId("636927824e15819b73808d51"), "nombre" : "ramiro", "estado_hogar" : "excelente", "numero_suerte" : 3, "cumpleaños" : { "mes" : "Julio", "dia" : 2, "año" : 2021 } }
+
+> db.estudiantes.find({numero_suerte:{$lte:10}}).pretty()
+{
+        "_id" : ObjectId("6369276c4e15819b73808d4e"),
+        "nombre" : "Pedro",
+        "estado_hogar" : "Bueno",
+        "numero_suerte" : 10,
+        "cumpleaños" : {
+                "mes" : "septiembre",
+                "dia" : 30,
+                "año" : 2021
+        }
+}
+{
+        "_id" : ObjectId("636927824e15819b73808d51"),
+        "nombre" : "ramiro",
+        "estado_hogar" : "excelente",
+        "numero_suerte" : 3,
+        "cumpleaños" : {
+                "mes" : "Julio",
+                "dia" : 2,
+                "año" : 2021
+        }
+}
+
+> db.estudiantes.find({numero_suerte: {$gte:1 , $lte:9} }).pretty()
+{
+        "_id" : ObjectId("636927824e15819b73808d51"),
+        "nombre" : "ramiro",
+        "estado_hogar" : "excelente",
+        "numero_suerte" : 3,
+        "cumpleaños" : {
+                "mes" : "Julio",
+                "dia" : 2,
+                "año" : 2021
+        }
+}
+
+
+> db.estudiantes.update({nombre : "Pedro"}, {$set: {interests: "[codificacion:'cod 2', brunch: 'brunch 2', MongoDb:'mongo 2']"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.estudiantes.update({nombre : "Juan"}, {$set: {interests: "[codificacion:'cod 1', brunch: 'brunch 1', MongoDb:'mongo 1']"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.estudiantes.update({nombre : "Julio"}, {$set: {interests: "[codificacion:'cod 3', brunch: 'brunch 3', MongoDb:'mongo 3']"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.estudiantes.update({nombre : "ramiro"}, {$set: {interests: "[codificacion:'cod 4', brunch: 'brunch 4', MongoDb:'mongo 4']"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.estudiantes.update({nombre : "luz"}, {$set: {interests: "[codificacion:'cod 5', brunch: 'brunch 5', MongoDb:'mongo 5']"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+
+
+> db.estudiantes.find()
+{ "_id" : ObjectId("6369276c4e15819b73808d4e"), "nombre" : "Pedro", "estado_hogar" : "Bueno", "numero_suerte" : 10, "cumpleaños" : { "mes" : "septiembre", "dia" : 30, "año" : 2021 }, "interests" : "[codificacion:'cod 2', brunch: 'brunch 2', MongoDb:'mongo 2']" }
+{ "_id" : ObjectId("636927754e15819b73808d4f"), "nombre" : "Juan", "estado_hogar" : "regular", "numero_suerte" : 66, "cumpleaños" : { "mes" : "agosto", "dia" : 20, "año" : 2021 }, "interests" : "[codificacion:'cod 1', brunch: 'brunch 1', MongoDb:'mongo 1']" }
+{ "_id" : ObjectId("6369277c4e15819b73808d50"), "nombre" : "Julio", "estado_hogar" : "malita", "numero_suerte" : 300, "cumpleaños" : { "mes" : "agosto", "dia" : 22, "año" : 2021 }, "interests" : "[codificacion:'cod 3', brunch: 'brunch 3', MongoDb:'mongo 3']" }
+{ "_id" : ObjectId("636927824e15819b73808d51"), "nombre" : "ramiro", "estado_hogar" : "excelente", "numero_suerte" : 3, "cumpleaños" : { "mes" : "Julio", "dia" : 2, "año" : 2021 }, "interests" : "[codificacion:'cod 4', brunch: 'brunch 4', MongoDb:'mongo 4']" }
+{ "_id" : ObjectId("636927884e15819b73808d52"), "nombre" : "luz", "estado_hogar" : "mas o menos", "numero_suerte" : 55, "cumpleaños" : { "mes" : "marzo", "dia" : 8, "año" : 2022 }, "interests" : "[codificacion:'cod 5', brunch: 'brunch 5', MongoDb:'mongo 5']" }
+
